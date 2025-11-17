@@ -28,31 +28,31 @@ flowchart TD
     style Devices fill:#fff1f2,stroke:#fca5a5,stroke-width:1px
 
     subgraph Inputs["Inputs"]
-        A1[Camera\n(frames)]
-        A2[Microphone\n(audio)]
-        A3[Text / CLI\n(commands)]
-        A4[Sensors\n(IMU, Lidar, GPS)]
+        A1[Camera<br/>frames]
+        A2[Microphone<br/>audio]
+        A3[Text / CLI<br/>commands]
+        A4[Sensors<br/>IMU, Lidar, GPS]
     end
 
     subgraph Perception["Perception Layer"]
-        P1[ASR\n(speech→text)]
-        P2[CV Models\n(object/scene)]
-        P3[State Estimator\n(robot & env)]
-        P4[Preprocessing\n(filters, codecs)]
+        P1[ASR<br/>speech→text]
+        P2[CV Models<br/>object/scene]
+        P3[State Estimator<br/>robot & env]
+        P4[Preprocessing<br/>filters, codecs]
     end
 
     subgraph Reasoning["Reasoning & Planner Layer"]
-        R1[OM1 Agent Runtime\n(event loop, scheduler)]
-        R2[LLM / Multimodal Models\n(local or cloud)]
-        R3[Tools & Skills\n(nav, dialogue, grasp, vision tools)]
-        R4[Memory / RAG\n(short/long-term)]
-        R5[Safety / Policy\n(constraints, checks)]
+        R1[OM1 Agent Runtime<br/>event loop, scheduler]
+        R2[LLM / Multimodal Models<br/>local or cloud]
+        R3[Tools & Skills<br/>nav, dialogue, grasp, vision tools]
+        R4[Memory / RAG<br/>short/long-term]
+        R5[Safety / Policy<br/>constraints, checks]
     end
 
     subgraph Action["Action Layer"]
-        AC1[Task Planner\n(global goals)]
-        AC2[Motion Planner\n(path planning)]
-        AC3[Skill Executor\n(exec ops)]
+        AC1[Task Planner<br/>global goals]
+        AC2[Motion Planner<br/>path planning]
+        AC3[Skill Executor<br/>exec ops]
     end
 
     subgraph Devices["Device / Hardware"]
@@ -90,5 +90,6 @@ flowchart TD
     AC3 --> D3
     AC3 --> D4
 
-    R2 ---|optional cloud| Cloud[(Cloud LLM / API)]
-    Cloud --- R2
+    R2 -.->|optional cloud| Cloud[(Cloud LLM / API)]
+    Cloud -.-> R2
+```
