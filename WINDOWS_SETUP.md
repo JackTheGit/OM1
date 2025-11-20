@@ -1,6 +1,6 @@
-﻿# Windows Setup Guide for OMI
+# Windows Setup Guide for OMI
 
-*Contributor: pokerdirectory@hotmail.com*  
+*Contributor: JackTheGit*  
 *This guide was created through systematic testing and verification on a fresh Windows installation.*
 
 ## Prerequisites
@@ -51,22 +51,22 @@
 
 ## Common Issues & Solutions
 
-### ❌ \"Python 3.14 is not supported\"
+### ? \"Python 3.14 is not supported\"
 **Solution:** Install Python 3.12.10 instead of newer versions.
 
-### ❌ \"Microsoft Visual C++ 14.0 or greater is required\"
+### ? \"Microsoft Visual C++ 14.0 or greater is required\"
 **Solution:** Install Microsoft Visual C++ Build Tools as described in prerequisites.
 
-### ❌ \"pip is not recognized\"
+### ? \"pip is not recognized\"
 **Solution:** 
 - Reinstall Python and check \"Add Python to PATH\"
 - Restart PowerShell after Python installation
 - Use \python -m pip install .\ instead of \pip install .\
 
-### ❌ \"No such file or directory: 'requirements.txt'\"
+### ? \"No such file or directory: 'requirements.txt'\"
 **Solution:** This project uses modern \pyproject.toml\ packaging. Use \pip install .\ instead.
 
-### ❌ \"Git is not recognized\"
+### ? \"Git is not recognized\"
 **Solution:** Install Git and ensure it's added to PATH.
 
 ## Project Structure Notes
