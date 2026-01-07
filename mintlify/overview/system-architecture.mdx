@@ -1,0 +1,94 @@
+---
+title: OM1 System Architecture
+description: High-level architecture of the OM1 multimodal agent runtime and hardware interaction pipeline.
+---
+
+# System Architecture Overview
+
+This page provides a consolidated, high-level architecture diagram of the OM1 system.  
+While pieces of the architecture are documented across the repository, this diagram gives developers, integrators, and contributors a single visual overview of how **inputs → perception → reasoning → planning → hardware execution** flow through the OM1 runtime.
+
+## Why This Diagram Is Useful
+
+- Helps new developers and researchers understand the end-to-end data flow.
+- Clarifies responsibilities between layers (Perception, Reasoning, Skills/Tools, Device Control).
+- Shows where custom integrations, tools, or hardware controllers can be added.
+- Makes multimodal input/output and optional cloud components explicit.
+
+---
+
+## OM1 Architecture Diagram
+
+```mermaid
+flowchart TD
+    style Inputs fill:#f3f4f6,stroke:#cbd5e1,stroke-width:1px
+    style Perception fill:#eef2ff,stroke:#c7d2fe,stroke-width:1px
+    style Reasoning fill:#ecfdf5,stroke:#bbf7d0,stroke-width:1px
+    style Action fill:#fff7ed,stroke:#ffd7a1,stroke-width:1px
+    style Devices fill:#fff1f2,stroke:#fca5a5,stroke-width:1px
+
+    subgraph Inputs["Inputs"]
+        A1[Camera\n(frames)]
+        A2[Microphone\n(audio)]
+        A3[Text / CLI\n(commands)]
+        A4[Sensors\n(IMU, Lidar, GPS)]
+    end
+
+    subgraph Perception["Perception Layer"]
+        P1[ASR\n(speech→text)]
+        P2[CV Models\n(object/scene)]
+        P3[State Estimator\n(robot & env)]
+        P4[Preprocessing\n(filters, codecs)]
+    end
+
+    subgraph Reasoning["Reasoning & Planner Layer"]
+        R1[OM1 Agent Runtime\n(event loop, scheduler)]
+        R2[LLM / Multimodal Models\n(local or cloud)]
+        R3[Tools & Skills\n(nav, dialogue, grasp, vision tools)]
+        R4[Memory / RAG\n(short/long-term)]
+        R5[Safety / Policy\n(constraints, checks)]
+    end
+
+    subgraph Action["Action Layer"]
+        AC1[Task Planner\n(global goals)]
+        AC2[Motion Planner\n(path planning)]
+        AC3[Skill Executor\n(exec ops)]
+    end
+
+    subgraph Devices["Device / Hardware"]
+        D1[Locomotion Controller]
+        D2[Arm / Manipulator Controller]
+        D3[Audio Output & Haptics]
+        D4[Custom Device APIs]
+    end
+
+    A1 --> P2
+    A2 --> P1
+    A3 --> R1
+    A4 --> P3
+
+    P1 --> R1
+    P2 --> R1
+    P3 --> R1
+    P4 --> R1
+
+    R1 --> R2
+    R1 --> R3
+    R1 --> R4
+    R1 --> R5
+    R2 --> R3
+
+    R3 --> AC1
+    R2 --> AC1
+    R4 --> AC1
+
+    AC1 --> AC2
+    AC2 --> AC3
+
+    AC3 --> D1
+    AC3 --> D2
+    AC3 --> D3
+    AC3 --> D4
+
+    R2 ---|optional cloud| Cloud[(Cloud LLM / API)]
+    Cloud --- R2
